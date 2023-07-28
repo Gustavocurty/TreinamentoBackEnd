@@ -6,7 +6,6 @@ class Database {
     constructor() {
         this.connection = mongoose.connect(
             config.url,
-            
         );
     }
 }
