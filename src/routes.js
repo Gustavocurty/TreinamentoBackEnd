@@ -1,15 +1,22 @@
 import { Router } from "express";
-import { route } from "express/lib/router";
+
+import auth from "./middlewares/auth"
 
 import HelloControllers from "./controllers/HelloControllers";
+import SessionsController from "./controllers/SessionsController";
 import UsersController from "./controllers/UsersController"
 import RepositoriesController from "./controllers/RepositoriesController";
 
 const routes = new Router();
 
+routes.put('/sessions', SessionsController.create);
 routes.get('/hello', HelloControllers.index);
 
+routes.use(auth);
+
+
 // REST
+routes.get('/hello', HelloControllers.index);
 
 routes.get('/users', UsersController.index);
 routes.get('/users/:id', UsersController.show);

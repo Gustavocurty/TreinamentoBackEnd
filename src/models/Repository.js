@@ -1,6 +1,6 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const repositorySchema = new Mongoose.Schema(
+const repositorySchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -21,4 +21,4 @@ const repositorySchema = new Mongoose.Schema(
     }
 );
 
-export default Mongoose.model('Repository', repositorySchema)
+export default mongoose.model('Repository', repositorySchema)

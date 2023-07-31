@@ -7,7 +7,7 @@ class RepositoriesController {
             const { user_id } = req.params;
 
             const user = await User.findById(user_id);
-
+            
             if(!user){
                 return res.status(404).json();
             }
@@ -15,35 +15,33 @@ class RepositoriesController {
             const repositories = await Repository.find({
                 userId: user_id
             });
-
+            
             return res.json(repositories);
 
         } catch(err) {
             console.error(err);
-            return res.status(500).json({ error: "Internal server error."});
+            return res.status(500).json({ error: "Internal server error."})
         }
     }
 
     async create(req, res){
-        try{
+        try {
             const { user_id } = req.params;
             const { name, url } = req.body;
 
             const user = await User.findById(user_id);
-
+            
             if(!user){
                 return res.status(404).json();
             }
 
-            const repository = await Repository.findOne({ 
+            const repository = await Repository.findOne({
                 userId: user_id,
                 name
             })
 
-            if(repository){
-                return res
-                .status(422)
-                .json({ message: `Repository ${name} already exists.`});
+            if(repository) {
+                return res.status(422).json({ message: `Repository ${name} already exists.`});
             }
 
             const newRepository = await Repository.create({
@@ -54,40 +52,41 @@ class RepositoriesController {
 
             return res.status(201).json(newRepository);
 
-        }catch(err){
+        } catch(err) {
             console.error(err);
-            return res.status(500).json({ error: "Internal services error."});
+            return res.status(500).json({ error: "Internal server error."})
         }
     }
 
-
     async destroy(req, res){
-        try{
+        try {
             const { user_id, id } = req.params;
+            const { name, url } = req.body;
 
             const user = await User.findById(user_id);
-
+            
             if(!user){
                 return res.status(404).json();
             }
 
             const repository = await Repository.findOne({
-                userId: user_id,
+                userId: user_is,
                 id
             });
 
-            if(!repository){
+            if(!repository) {
                 return res.status(404).json();
             }
 
             await repository.deleteOne();
-
             return res.status(200).json();
-        }catch(err){
+
+        } catch(err) {
             console.error(err);
-            return res.status(500).json({ error: "Internal services error."});
+            return res.status(500).json({ error: "Internal server error."})
         }
     }
 }
 
 export default new RepositoriesController();
+
