@@ -34,7 +34,7 @@ class RepositoriesController {
 
     async create(req, res){
         try {
-            const { user_id } = req.params;
+            const { user_id, id } = req.params;
             const { name, url } = req.body;
 
             const user = await User.findById(user_id);
@@ -45,7 +45,7 @@ class RepositoriesController {
 
             const repository = await Repository.findOne({
                 userId: user_id,
-                url
+                _id: id
             })
 
             if(repository) {
@@ -79,7 +79,7 @@ class RepositoriesController {
 
             const repository = await Repository.findOne({
                 userId: user_id,
-                id
+                _id: id
             });
 
             if(!repository) {
