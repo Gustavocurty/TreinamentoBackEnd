@@ -1,7 +1,7 @@
 import Jwt from "jsonwebtoken";
 
 import User from "../models/User";
-import { checkPassword } from "../models/User"
+import  { checkPassword } from "../services/auth"
 
 import authConfig from "../config/auth"
 
@@ -11,11 +11,11 @@ class SessionsController {
 
         const user = await User.findOne({ email });
 
-        if(!user){
+        if (!user){
             return res.status(401).json({ error: "User / password invalid."});
         }
 
-        if(!checkPassword(user, password)){
+        if (!checkPassword(user, password)) {
             return res.status(401).json({ error: "User / password invalid."});
         }
 
